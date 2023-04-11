@@ -4,7 +4,7 @@
     "version": "0.1.0",
     "repository": {
         "type": "git",
-        "url": "https://github.com/alexcode-cc/Blog501.git"
+        "url": "https://github.com/alexcode-cc/Rails501.git"
     },
     "scripts": {
         "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
