@@ -1,9 +1,10 @@
 class PostsController < ApplicationController
+  before_action :set_board
   before_action :set_post, only: %i[ show edit update destroy ]
 
   # GET /posts or /posts.json
   def index
-    @posts = Post.all
+    redirect_to board_path(@board)
   end
 
   # GET /posts/1 or /posts/1.json
@@ -59,8 +60,12 @@ class PostsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    def set_board
+      @board = Board.find(params[:board_id])
+    end
+
     def set_post
-      @post = Post.find(params[:id])
+      @post = @board.posts.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
