@@ -10,7 +10,7 @@ begin
   5.times do |i|
     Board.create(name: "Board ##{i+1}")
     2.times do |j|
-      Post.create(title: "Title for b#{i+1} p#{j+1}", content: "Content for board ##{i+1} post ##{j+1}i", board_id: i+1)
+      Post.create(title: "Title for b#{i+1} p#{j+1}", content: "Content for board ##{i+1} post ##{j+1}", board_id: i+1)
     end
   end
   puts "Seed success!"
