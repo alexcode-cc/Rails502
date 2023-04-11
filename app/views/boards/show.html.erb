@@ -5,5 +5,32 @@
   <%= @board.name %>
 </p>
 
+<% if @posts != nil %>
+  <hr>
+  <h5>Listing Posts</h5>
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Content</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @posts.each do |post| %>
+      <tr>
+        <td><%= post.title %>
+        <td><%= post.content %>
+        <td><%= link_to 'Show', board_post_path(@board, post) %></td>
+        <td><%= link_to 'Edit', edit_board_post_path(@board, post) %></td>
+        <td><%= link_to 'Destroy', board_post_path(@board, post), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+  <hr>
+<% end %>
+<br>
+<%= link_to 'New Post', new_board_post_path(@board) %> |
 <%= link_to 'Edit', edit_board_path(@board) %> |
 <%= link_to 'Back', boards_path %>
