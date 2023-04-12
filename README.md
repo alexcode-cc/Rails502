@@ -244,7 +244,7 @@ vim Gemfile
 
 ```rb
 # Use json
-gem 'json'  
+gem 'json', '~> 2.3.0'  
 ```
 
 ```sh
@@ -690,5 +690,330 @@ yarn changelog
 git add .
 git commit -m "docs: add changelog 0.3.0"
 git tag 0.3.0 HEAD -m "modify codes for nested resources"
+git push --all && git push --tags
+```
+
+### Use devise for user management
+
+Setup devise
+
+```sh
+vim Gemfile
+```
+
+```rb
+# Use devise for user management
+gem 'devise', '~> 4.9.2'
+```
+
+```sh
+bundle install
+rails generate devise:install
+vim config/environments/development.rb
+```
+
+```rb
+config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+```
+
+```sh
+vim app/views/layouts/application.html.erb
+```
+
+```rb
+<p class="notice" id="notice" style="color:green;"><%= notice %></p>
+<p class="alert" id="alert" style="color:red;"><%= alert %></p>
+```
+
+```sh
+rails generate devise:views
+rails generate devise user
+rails db:migrate
+vim app/controllers/boards_controller.rb
+```
+
+```rb
+before_action :authenticate_user!, only: %i[ new ]
+```
+
+```sh
+vim app/controllers/posts_controller.rb
+```
+
+```rb
+before_action :authenticate_user!, only: %i[ new ]
+```
+
+Add user navigation bar
+
+```sh
+vim app/views/pages/about.html.erb
+```
+
+```rb
+<%= link_to 'Boards', boards_path %>
+```
+
+```sh
+vim app/views/boards/index.html.erb
+```
+
+```rb
+| <%= link_to 'Home', root_path %>
+```
+
+```sh
+mkdir app/views/shared
+vim app/views/shared/_user_nav.html.erb
+```
+
+```rb
+<div class="user_navigation">
+  <% if !current_user %>
+    <%= link_to 'Sign in', new_user_session_path %>
+    <%= link_to 'Sign up', new_user_registration_path %>
+  <% else %>
+    Hi! <%= current_user.email %>
+    <%= link_to 'Sign out', destroy_user_session_path, :method => :delete %>
+  <% end %>
+</div>
+```
+
+```sh
+vim vim app/views/layouts/application.html.erb
+```
+
+```rb
+<%= render 'shared/user_nav' %>
+```
+
+Add name to user model
+
+```sh
+rails generate migration add_username_to_user username:string:index
+```
+
+```rb
+class AddNameToUser < ActiveRecord::Migration[5.2]
+  def change
+    add_column :users, :username, :string, null: false, default: ""
+    add_index :users, :username, unique: true
+  end
+
+end
+```
+
+```sh
+rails db:migrate
+vim app/views/devise/regaistrations/new.html.erb
+```
+
+```rb
+<div class="field">
+  <%= f.label 'name' %><br />
+  <%= f.text_field :username, autofocus: true %>
+</div>  
+<div class="field">
+  <%= f.label :email %><br />
+  <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+</div>  
+```
+
+```sh
+vim app/views/devise/regaistrations/edit.html.erb
+```
+
+```rb
+<div class="field">
+  <%= f.label 'name' %><br/>
+  <%= f.text_field :username, autofocus: true %><br/>
+</div>  
+<div class="field">
+  <%= f.label :email %><br />
+  <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+</div>  
+```
+
+```sh
+vim app/views/shared/_user_nav.html.erb
+```
+
+```rb
+    Hi! <%= current_user.username %>
+```
+
+```sh
+vim app/controllers/application_controller.rb
+```
+
+```rb
+  before_action :configure_permitted_parameters, if: :devise_controller?
+
+  protected
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:username])
+  end
+```
+
+Add user id to board
+
+```sh
+rails generate migration add_user_id_to_board user:references
+```
+
+```rb
+def change
+ add_reference :boards, :user, foreign_key: true
+end
+```
+
+```sh
+vim app/models/board.rb
+```
+
+```rb
+belongs_to :user
+```
+
+```sh
+vim app/models/user.rb
+```
+
+```rb
+has_many :boards
+```
+
+```sh
+rails db:migrate
+```
+
+## Modify boards controller / views for User
+
+```sh
+vim app/controllers/boards_controller.rb
+```
+
+```rb
+before_action :authenticate_user! , only: %i[ new create ]
+
+def create
+  @board = Board.new(board_params)
+  @board.user = current_user
+
+  respond_to do |format|
+    if @board.save
+      format.html { redirect_to board_url(@board), notice: "Board was successfully created." }
+      format.json { render :show, status: :created, location: @board }
+      format.html { render :new, status: :unprocessable_entity }
+      format.json { render json: @board.errors, status: :unprocessable_entity }
+    end
+  end
+end
+```
+
+```sh
+vim app/views/boards/index.html.erb
+```
+
+```rb
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Creator</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @boards.each do |board| %>
+      <tr>
+        <td><%= board.name %></td>
+        <td><%= board.user.username %></td>
+        <td><%= link_to 'Show', board %></td>
+        <td><%= link_to 'Edit', edit_board_path(board) %></td>
+        <td><%= link_to 'Destroy', board, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+```
+
+Modify seed for create default user
+
+```sh
+vim db/seed.rb
+```
+
+```rb
+begin
+  user = User.create! :username => 'admin', :email => 'admin@rails501.org', :password => 'P@ssw0rd', :password_confirmation => 'P@ssw0rd'
+  5.times do |i|
+    Board.create(name: "Board ##{i+1}", user_id: 1)
+    2.times do |j|
+      Post.create(title: "Title for b#{i+1} p#{j+1}", content: "Content for board ##{i+1} post ##{j+1}", board_id: i+1)
+    end
+  end
+  puts "Seed success!"
+rescue
+  puts "Seed fail!"
+  puts Board.errors if Board.errors.any?
+  puts Post.errors if Post.errors.any?
+end   
+```
+
+```sh
+rails db:reset
+```
+
+Only board owner can edit/delete board and post
+
+```sh
+vim app/controllers/boards_controller.rb
+```
+
+```rb
+before_action :set_posts, only: %i[ show ]
+before_action :authenticate_user! , only: %i[ new create edit update destroy ]
+before_action :check_user_permission , only: %i[ edit update destroy ]
+
+def check_user_permission
+  if current_user != @board.user
+    redirect_to boards_path, alert: "#{current_user.username}, You are no permission to update/delete #{@board.name}."
+  end
+end
+```
+
+```sh
+vim app/controllers/posts_controller.rb
+```
+
+```rb
+before_action :set_board
+before_action :set_post, only: %i[ show edit update destroy ]
+before_action :authenticate_user!, except: [:show]
+before_action :check_user_permission, only: %i[ new create edit update destroy ]
+
+def check_user_permission
+  if current_user != @board.user
+    redirect_to board_path(@board), alert: "#{current_user.username}, You are no permission to create/update/delete  #{@post.title}."
+  end
+end
+```
+
+Git comment
+
+```json
+"version": "0.4.0",
+```
+
+```sh
+git add .
+git commit -m "feat: use devise for user management"
+yarn changelog:check
+yarn changelog
+git add .
+git commit -m "docs: add changelog 0.4.0"
+git tag 0.4.0 HEAD -m "use devise for user management"
 git push --all && git push --tags
 ```
