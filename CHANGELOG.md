@@ -1,3 +1,16 @@
+# [0.4.0](https://github.com/alexcode-cc/Rails501/compare/0.3.0...0.4.0) (2023-04-12)
+
+
+### Features
+
+* add user id to board ([e77020e](https://github.com/alexcode-cc/Rails501/commit/e77020e81092fc6f72f836ed4691f16cd54b4426))
+* add user navigation bar ([2cced2d](https://github.com/alexcode-cc/Rails501/commit/2cced2de7cf47353a6d6d92ff957a5ce76170622))
+* add username to user model ([2638365](https://github.com/alexcode-cc/Rails501/commit/2638365ba1628fc6ffe75c1bd8c667486802eb34))
+* only owner can edit/delete board and post ([6f3fec6](https://github.com/alexcode-cc/Rails501/commit/6f3fec6cfbcf557b1c62b1fa49a05656460f5a31))
+* use devise for user management ([f7aea0f](https://github.com/alexcode-cc/Rails501/commit/f7aea0ffdd0e628c0848fc680908b96e36a56a36))
+
+
+
 # [0.3.0](https://github.com/alexcode-cc/Rails501/compare/0.2.0...0.3.0) (2023-04-11)
 
 
