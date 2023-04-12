@@ -1,6 +1,7 @@
 class BoardsController < ApplicationController
-  before_action :authenticate_user!, only: %i[ new create ]
   before_action :set_board, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!, only: %i[ new create edit update destroy ]
+  before_action :check_user_permission, only: %i[ edit update destroy ]
   before_action :set_posts, only: %i[ show ]
 
   # GET /boards or /boards.json
@@ -73,5 +74,11 @@ class BoardsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def board_params
       params.require(:board).permit(:name)
+    end
+
+    def check_user_permission
+      if current_user != @board.user
+        redirect_to boards_path, alert: "#{current_user.username}, You are no permission to update/delete [#{@board.name}]."
+      end
     end
 end

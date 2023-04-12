@@ -1,7 +1,8 @@
 class PostsController < ApplicationController
-  before_action :authenticate_user! , only: %i[ new ]
   before_action :set_board
   before_action :set_post, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!, except: [ :show ]
+  before_action :check_user_permission, only: %i[ new create edit update destroy ]
 
   # GET /posts or /posts.json
   def index
@@ -72,5 +73,11 @@ class PostsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def post_params
       params.require(:post).permit(:title, :content)
+    end
+
+    def check_user_permission
+      if current_user != @board.user
+        redirect_to board_path(@board), alert: "#{current_user.username}, You are no permission to create/update/delete [#{@post.title}]."
+      end
     end
 end
