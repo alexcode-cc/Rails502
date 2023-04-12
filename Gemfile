@@ -15,6 +15,14 @@ gem 'json', '~> 2.3.0'
 gem 'devise', '~> 4.9.2'
 # Use kaminari for paginate
 gem 'kaminari', '~> 1.2.2'
+# Use capistrano
+gem 'capistrano', '>= 3.17.2'
+gem 'capistrano-rails', '>= 1.6.2'
+gem 'capistrano-passenger', '>= 0.2.1'
+gem 'capistrano-rvm', '>= 0.1.2'
+gem 'ed25519', '>= 1.2'
+gem 'bcrypt_pbkdf', '>= 1.0'
+#gem 'bcrypt', '~> 3.1.7'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
