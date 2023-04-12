@@ -1,0 +1,41 @@
+<nav class='navbar navbar-light bg-light navbar-expand-lg'>
+  <div class='container-fluid'>
+    <a class="nav-logo" href="https://rubyonrails.org/" target="_blank" aria-label="Ruby on Rails"></a>
+    <%= link_to 'Rails 501', root_path, class: 'navbar-brand ms-5 mb-0 h1 btn btn-outline-danger' %>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class='collapse navbar-collapse' id="navbarSupportedContent">
+      <ul class='navbar-nav ms-auto mb-2 mb-lg-0'>
+        <li class="nav-item">
+          <%= link_to 'About', '/about', class: 'nav-link' %>
+        </li>
+        <li class="nav-item">
+        </li>
+      <% if !current_user %>
+        <li class="dropdown">
+          <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+           Login  
+          </button>
+          <ul class="dropdown-menu">
+            <li> <%= link_to 'Login', new_user_session_path, class: "dropdown-item" %></li>
+            <li> <%= link_to 'Register', new_user_registration_path, class: "dropdown-item" %> </li>
+          </ul>
+        </li>
+      <% else %>
+        <li class="dropdown">
+          <button class="btn btn-sm btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <%= current_user.username %>
+          </button>
+          <ul class="dropdown-menu">
+            <li><%= link_to 'Edit', edit_user_registration_path, class: 'dropdown-item' %></li>
+            <li><%= link_to 'Logout', destroy_user_session_path, :method => :delete, class: "dropdown-item" %></li>
+          </ul>
+        </li>
+      <% end %>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="card border-white" style="height: 2rem;">
+</div>

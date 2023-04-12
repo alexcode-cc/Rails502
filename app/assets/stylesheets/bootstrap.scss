@@ -6,3 +6,34 @@
 .alert-alert {
   @extend .alert-danger;
 }
+
+.nav-logo {
+    background: #D30001;
+    border-radius: 100%;
+    height: 43px;
+    left: 8px;
+    position: absolute;
+    top: 6px;
+    transition: background 0.25s cubic-bezier(0.33, 1, 0.68, 1);
+    width: 43px;
+    z-index: 2;
+}
+
+.nav-logo:after {
+    background-image: url(images/logo.svg);
+    background-position: left center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    content: '';
+    filter: brightness(0) invert(1);
+    height: 24px;
+    left: 4px;
+    position: absolute;
+    top: 7px;
+    width: 33px;
+}
+
+.nav-logo:hover {
+    background: #261B23;
+}
+
