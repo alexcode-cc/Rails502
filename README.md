@@ -113,7 +113,7 @@ ruby 2.7.6p219 (2022-04-12 revision c9c2245c0a) [x86_64-linux]
 gem -v
 ```
 
-3.1.6
+`3.1.6`
 
 ```sh
 gem update --system
@@ -162,7 +162,7 @@ gem install rails -v 5.2.8.1
 rails -v
 ```
 
-Rails 5.2.8.1
+`Rails 5.2.8.1`
 
 ## Setup Rails 501
 
@@ -449,7 +449,7 @@ end
 rails db:migrate
 ```
 
-Create nested resources for routers
+Create nested resources for routes
 
 ```sh
 vim config/routes.rb
