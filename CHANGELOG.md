@@ -1,3 +1,12 @@
+## [0.5.1](https://github.com/alexcode-cc/Rails501/compare/0.5.0...0.5.1) (2023-04-12)
+
+
+### Features
+
+* use bootstrap style navbar ([c521a6c](https://github.com/alexcode-cc/Rails501/commit/c521a6cac014e4cc1a0cb234a364ee93325b05fa))
+
+
+
 # [0.5.0](https://github.com/alexcode-cc/Rails501/compare/0.4.0...0.5.0) (2023-04-12)
 
 
