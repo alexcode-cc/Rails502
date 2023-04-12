@@ -1,3 +1,12 @@
+# [0.7.0](https://github.com/alexcode-cc/Rails501/compare/0.6.0...0.7.0) (2023-04-12)
+
+
+### Features
+
+* use capistrano for deploy ([52c8b9c](https://github.com/alexcode-cc/Rails501/commit/52c8b9c7bae2af956e31c891ce8daab08343db3f))
+
+
+
 # [0.6.0](https://github.com/alexcode-cc/Rails501/compare/0.5.1...0.6.0) (2023-04-12)
 
 
