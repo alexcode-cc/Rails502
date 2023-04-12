@@ -1209,3 +1209,130 @@ git commit -m "docs: update changelog to 0.5.0"
 git tag 0.5.0 HEAD -m "use bootstrap 5 for ui"
 git push --all && git push --tags
 ```
+
+### Use Kaminari for paginate
+
+Disable flash test
+
+```sh
+vim app/controller/pages_controller.rb
+```
+
+```rb
+def about
+  ...
+  #flash[:alert] = 'Hello Alert!'
+  #flash[:info] = 'Hello Info!'
+  #flash[:warning] = 'Hello Warning!'
+  #flash[:success] = 'Hello Success!'
+end
+```
+
+Setup kaminari
+
+```sh
+vim Gemfile
+```
+
+```rb
+# Use kaminari for paginate
+gem 'kaminari', '~> 1.2.2'
+```
+
+```sh
+bundle
+vim app/assets/stylesheets/bootstrap.scss
+```
+
+```scss
+#paginate-bar span{
+    padding: 0 5px 0 5px !important;
+}
+```
+
+```sh
+rails generate kaminari:config
+vim config/initializers/kaminari_config.rb
+```
+
+```rb
+# frozen_string_literal: true
+
+Kaminari.configure do |config|
+  # config.default_per_page = 25
+  config.default_per_page = 5
+  # config.max_per_page = nil
+  # config.window = 4
+  # config.outer_window = 0
+  # config.left = 0
+  # config.right = 0
+  # config.page_method_name = :page
+  # config.param_name = :page
+  # config.max_pages = nil
+  # config.params_on_first_page = false
+end
+```
+
+```sh
+vim app/controller/boards_controller.rb
+```
+
+```rb
+def index
+  @boards = Board.all.page(params[:page])
+end
+
+```
+
+```sh
+vim app/views/boards/index.html.erb
+```
+
+```rb
+<br />
+<div id="paginate-bar">
+  <%= paginate @boards %>
+</div>
+```
+
+```sh
+vim db/seed.rb
+```
+
+```rb
+begin
+  user = User.create! :username => 'admin', :email => 'admin@rails501.org', :password => 'P@ssw0rd', :password_confirmation => 'P@ssw0rd'
+  20.times do |i|
+    Board.create(name: "Board ##{i+1}", user_id: 1)
+    5.times do |j|
+      Post.create(title: "Title for b#{i+1} p#{j+1}", content: "Content for board ##{i+1} post ##{j+1}", board_id: i+1)
+    end
+  end
+  puts "Seed success!"
+rescue
+  puts "Seed fail!"
+  puts Board.errors if Board.errors.any?
+  puts Post.errors if Post.errors.any?
+end   
+```
+
+```sh
+rails db:reset
+```
+
+Git comment
+
+```json
+"version": "0.6.0",
+```
+
+```sh
+git add .
+git commit -m "feat: use kaminari for paginate"
+yarn changelog:check
+yarn changelog
+git add .
+git commit -m "docs: update changelog to 0.6.0"
+git tag 0.6.0 HEAD -m "use kaminari for paginate"
+git push --all && git push --tags
+```
