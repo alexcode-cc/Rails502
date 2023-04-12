@@ -1,7 +1,7 @@
 {
     "name": "rails501",
     "private": true,
-    "version": "0.4.0",
+    "version": "0.5.0",
     "repository": {
         "type": "git",
         "url": "https://github.com/alexcode-cc/Rails501.git"
@@ -14,5 +14,10 @@
         "changelog:check:angular": "conventional-changelog -p angular",
         "changelog:help": "conventional-changelog --help"
     },
-    "dependencies": {}
+    "dependencies": {
+        "@popperjs/core": "^2.11.7",
+        "bootstrap": "^5.2.3",
+        "jquery": "^3.6.4",
+        "popper.js": "^1.16.1"
+    }
 }

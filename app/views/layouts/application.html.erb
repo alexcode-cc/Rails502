@@ -11,8 +11,7 @@
 
   <body>
     <%= render 'shared/user_nav' %>
-    <p class="notice" id="notice" style="color:green;"><%= notice %></p>
-    <p class="alert" id="alert" style="color: red;"><%= alert %></p>
+    <%= render 'shared/flash' %>
     <%= yield %>
   </body>
 </html>
