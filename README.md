@@ -1017,3 +1017,92 @@ git commit -m "docs: add changelog 0.4.0"
 git tag 0.4.0 HEAD -m "use devise for user management"
 git push --all && git push --tags
 ```
+
+### Use Bootstrap for UI
+
+Setup bootstrap 5
+
+```sh
+yarn add bootstrap jquery popper.js @popperjs/core
+```
+
+```sh
+vim app/assets/javascript/application.js
+```
+
+```rb
+//= require jquery
+//= require bootstrap/dist/js/bootstrap.bundle.js
+//= require_tree .
+```
+
+```sh
+vim app/assets/stylesheets/bootstrap.scss
+```
+
+```scss
+@import "bootstrap/scss/bootstrap";
+
+.alert-notice {
+  @extend .alert-info;
+}
+
+.alert-alert {
+  @extend .alert-danger;
+}
+```
+
+```sh
+mkdir app/views/shared
+vim app/views/shared/_flash.html.erb
+```
+
+```rb
+<% flash.each do |msg_type, msg| %>
+  <div class="alert alert-<%= msg_type %> alert-dismissible fade show" role="alert">
+    <%= msg %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="x"></button>
+  </div>
+<% end %>
+```
+
+```sh
+vim app/views/layout/application.html.erb
+```
+
+```rb
+<div class="container">
+  <%= render 'shared/flash' %>
+  <%= yield %>
+</div>
+```
+
+```sh
+vim app/controllers/pages_controller.rb
+```
+
+```rb
+def about
+  #flash[:alert] = 'Hello Alert!'
+  #flash[:info] = 'Hello Info!'
+  #flash[:warning] = 'Hello Warning!'
+  #flash[:success] = 'Hello Success!'
+end
+```
+
+Git comment
+
+```json
+"version": "0.5.0",
+```
+
+```sh
+git add .
+git commit -m "feat: use bootstrap 5 for ui"
+yarn changelog:check
+yarn changelog
+git add .
+git commit -m "docs: add changelog 0.5.0"
+git tag 0.5.0 HEAD -m "use bootstrap 5 for ui"
+git push --all && git push --tags
+```
