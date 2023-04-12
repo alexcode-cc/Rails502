@@ -1,3 +1,12 @@
+# [0.5.0](https://github.com/alexcode-cc/Rails501/compare/0.4.0...0.5.0) (2023-04-12)
+
+
+### Features
+
+* use bootstrap 5 for ui ([f1cd66c](https://github.com/alexcode-cc/Rails501/commit/f1cd66c9a5afad35001129c2ae4deac549601bcd))
+
+
+
 # [0.4.0](https://github.com/alexcode-cc/Rails501/compare/0.3.0...0.4.0) (2023-04-12)
 
 

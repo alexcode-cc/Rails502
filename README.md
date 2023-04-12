@@ -354,7 +354,7 @@ add about page
 yarn changelog:check
 yarn changelog
 git add .
-git commit -m "docs: add changelog 0.1.1"
+git commit -m "docs: update changelog to 0.1.1"
 git tag 0.1.1 HEAD -m "add about page"
 git push --all && git push --tags
 ```
@@ -408,7 +408,7 @@ git commit -m "feat: scaffold board and post"
 yarn changelog:check
 yarn changelog
 git add .
-git commit -m "docs: add changelog 0.2.0"
+git commit -m "docs: update changelog to 0.2.0"
 git tag 0.2.0 HEAD -m "scaffold board and post"
 git push --all && git push --tags
 ```
@@ -688,7 +688,7 @@ git commit -m "feat: modify codes for nested resources"
 yarn changelog:check
 yarn changelog
 git add .
-git commit -m "docs: add changelog 0.3.0"
+git commit -m "docs: update changelog to 0.3.0"
 git tag 0.3.0 HEAD -m "modify codes for nested resources"
 git push --all && git push --tags
 ```
@@ -1013,7 +1013,7 @@ git commit -m "feat: use devise for user management"
 yarn changelog:check
 yarn changelog
 git add .
-git commit -m "docs: add changelog 0.4.0"
+git commit -m "docs: update changelog to 0.4.0"
 git tag 0.4.0 HEAD -m "use devise for user management"
 git push --all && git push --tags
 ```
@@ -1102,7 +1102,7 @@ git commit -m "feat: use bootstrap 5 for ui"
 yarn changelog:check
 yarn changelog
 git add .
-git commit -m "docs: add changelog 0.5.0"
+git commit -m "docs: update changelog to 0.5.0"
 git tag 0.5.0 HEAD -m "use bootstrap 5 for ui"
 git push --all && git push --tags
 ```
