@@ -13,6 +13,8 @@ gem 'puma', '~> 3.11'
 gem 'json', '~> 2.3.0'
 # Use devise for user management
 gem 'devise', '~> 4.9.2'
+# Use kaminari for paginate
+gem 'kaminari', '~> 1.2.2'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
